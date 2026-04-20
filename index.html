@@ -3,126 +3,130 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Ad Monitor — 50 Ventanas</title>
+<title>Ad Monitor v3.2</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:#030712;color:#f1f5f9;font-family:'JetBrains Mono',Menlo,monospace;min-height:100vh;}
-  .header{background:#111827;border-bottom:1px solid #1f2937;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
-  .dot{width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;margin-right:10px;}
-  .dot.active{background:#4ade80;animation:pulse 1.5s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-  .title{font-size:16px;font-weight:700;letter-spacing:.12em;color:#fff;}
-  .subtitle{font-size:11px;color:#6b7280;margin-left:10px;}
-  .btn{padding:6px 20px;border:none;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
-  .btn-start{background:#16a34a;color:#fff;} .btn-start:hover{background:#15803d;}
-  .btn-stop{background:#b91c1c;color:#fff;} .btn-stop:hover{background:#991b1b;}
-  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 24px 12px;}
-  .stat{background:#111827;border-radius:8px;padding:12px 16px;}
-  .stat-label{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
-  .stat-val{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;}
-  .green{border:1px solid #14532d;color:#4ade80;}
-  .blue{border:1px solid #1e3a5f;color:#60a5fa;}
-  .yellow{border:1px solid #713f12;color:#facc15;}
-  .cyan{border:1px solid #164e63;color:#22d3ee;}
-  .purple{border:1px solid #3b0764;color:#c084fc;}
-  .panel{background:#111827;border:1px solid #1f2937;border-radius:8px;margin:0 24px 16px;}
-  .panel-header{padding:10px 16px;border-bottom:1px solid #1f2937;display:flex;align-items:center;justify-content:space-between;}
-  .panel-title{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.1em;}
-  .live-badge{font-size:10px;color:#4ade80;animation:pulse 1.5s infinite;}
-  table{width:100%;font-size:11px;border-collapse:collapse;}
-  th{text-align:left;padding:8px 16px;color:#6b7280;border-bottom:1px solid #1f2937;font-weight:400;}
-  th:not(:first-child){text-align:right;}
-  td{padding:7px 16px;border-bottom:1px solid #111827;color:#d1d5db;}
-  td:not(:first-child){text-align:right;}
-  .td-imp{color:#60a5fa;} .td-clk{color:#facc15;} .td-ctr{color:#4ade80;}
-  tr:hover td{background:#1f2937/30;}
-  .progress-bg{height:6px;background:#1f2937;border-radius:3px;width:80px;}
-  .progress-fill{height:6px;background:#3b82f6;border-radius:3px;transition:width .5s;}
-  .banners-grid{padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;}
-  .banner-slot{display:flex;flex-direction:column;align-items:center;gap:4px;}
-  .banner-label{font-size:10px;color:#4b5563;}
-  .banner-wrap{border:1px solid #374151;border-radius:4px;overflow:hidden;background:#1f2937;position:relative;}
-  .banner-stat{position:absolute;bottom:0;right:0;background:rgba(0,0,0,.7);color:#4ade80;font-size:9px;padding:1px 4px;}
-  .hidden-grid{padding:12px 16px;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;}
-  .hidden-cell{position:relative;display:flex;align-items:center;justify-content:center;height:28px;background:#1f2937;border:1px solid #374151;border-radius:4px;font-size:10px;color:#4b5563;}
-  .idle{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;text-align:center;}
-  .idle-icon{width:56px;height:56px;border:2px solid #374151;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
-  .idle-desc{color:#9ca3af;font-size:13px;max-width:480px;margin-bottom:20px;line-height:1.6;}
-  .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;font-size:11px;color:#4b5563;text-align:left;}
-  .feature-list span:first-child{color:#16a34a;}
-  iframe{border:none;display:block;}
-  .countdown{font-size:12px;color:#22d3ee;}
-  .countdown b{font-weight:700;}
-  .vpn-note{font-size:10px;color:#4b5563;padding:8px 16px 12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#030712;color:#f1f5f9;font-family:'JetBrains Mono',Menlo,monospace;min-height:100vh;}
+.hdr{background:#111827;border-bottom:1px solid #1f2937;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.dot{width:9px;height:9px;border-radius:50%;background:#ef4444;display:inline-block;margin-right:8px;flex-shrink:0;}
+.dot.on{background:#4ade80;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.title{font-size:15px;font-weight:700;letter-spacing:.1em;color:#fff;}
+.sub{font-size:10px;color:#6b7280;margin-left:8px;}
+.btn{padding:6px 18px;border:none;border-radius:5px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit;letter-spacing:.05em;}
+.btn-go{background:#16a34a;color:#fff;} .btn-go:hover{background:#15803d;}
+.btn-stop{background:#b91c1c;color:#fff;} .btn-stop:hover{background:#991b1b;}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:16px 20px 10px;}
+.stat{background:#111827;border-radius:7px;padding:10px 14px;}
+.slabel{font-size:9px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.sval{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;}
+.c-b{border:1px solid #1e3a5f;color:#60a5fa;}
+.c-y{border:1px solid #713f12;color:#facc15;}
+.c-c{border:1px solid #164e63;color:#22d3ee;}
+.c-g{border:1px solid #14532d;color:#4ade80;}
+.c-p{border:1px solid #3b0764;color:#c084fc;}
+.panel{background:#111827;border:1px solid #1f2937;border-radius:7px;margin:0 20px 12px;}
+.ph{padding:8px 14px;border-bottom:1px solid #1f2937;display:flex;align-items:center;justify-content:space-between;}
+.ptitle{font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;}
+.live{font-size:9px;color:#4ade80;animation:pulse 1.5s infinite;}
+table{width:100%;font-size:10px;border-collapse:collapse;}
+th{padding:6px 14px;color:#6b7280;border-bottom:1px solid #1f2937;font-weight:400;text-align:left;}
+th:not(:first-child){text-align:right;}
+td{padding:5px 14px;border-bottom:1px solid #111827;color:#d1d5db;}
+td:not(:first-child){text-align:right;}
+.ti{color:#60a5fa;font-weight:700;} .tc{color:#facc15;} .tr{color:#4ade80;}
+.prog{height:5px;background:#1f2937;border-radius:3px;width:70px;display:inline-block;vertical-align:middle;}
+.progf{height:5px;background:#3b82f6;border-radius:3px;transition:width .4s;}
+.bgrid{padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;}
+.bslot{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.blbl{font-size:9px;color:#4b5563;}
+.bwrap{border:1px solid #374151;border-radius:4px;overflow:hidden;background:#1f2937;}
+.hgrid{padding:10px 14px;display:grid;grid-template-columns:repeat(15,1fr);gap:3px;}
+.hcell{position:relative;display:flex;align-items:center;justify-content:center;height:22px;background:#1f2937;border:1px solid #374151;border-radius:3px;font-size:9px;color:#374151;cursor:default;}
+.idle{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;}
+.idle-icon{width:48px;height:48px;border:2px solid #374151;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.idle-desc{color:#9ca3af;font-size:12px;max-width:440px;margin-bottom:16px;line-height:1.6;}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;font-size:10px;color:#4b5563;text-align:left;}
+.feats span:first-child{color:#16a34a;}
+.cdtxt{font-size:11px;color:#22d3ee;}
+.ratebar{background:#111827;border:1px solid #1f2937;border-radius:7px;margin:0 20px 12px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+iframe{border:none;display:block;}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}.hgrid{grid-template-columns:repeat(10,1fr);}}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div style="display:flex;align-items:center;">
+<div class="hdr">
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
     <span class="dot" id="dot"></span>
     <span class="title">AD MONITOR</span>
-    <span class="subtitle">v3.1 · 50 visibles · 50 ocultas · VPN-ready</span>
+    <span class="sub" id="subline">50 vis · 300 ocultas · ~50k imp/h</span>
   </div>
-  <div style="display:flex;align-items:center;gap:16px;">
-    <span class="countdown" id="countdown" style="display:none;">recarga en <b id="countVal">30</b>s</span>
-    <button class="btn btn-start" id="mainBtn" onclick="toggleMonitor()">INICIAR</button>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="cdtxt" id="cdspan" style="display:none;">recarga en <b id="cdval">25</b>s</span>
+    <button class="btn btn-go" id="mainBtn" onclick="toggle()">INICIAR</button>
   </div>
 </div>
 
 <div class="stats">
-  <div class="stat green"><div class="stat-label">Visibles</div><div class="stat-val green" id="sv">50</div></div>
-  <div class="stat purple"><div class="stat-label">Ocultas</div><div class="stat-val purple" id="sh">50</div></div>
-  <div class="stat blue"><div class="stat-label">Impresiones</div><div class="stat-val blue" id="si">0</div></div>
-  <div class="stat yellow"><div class="stat-label">Clics</div><div class="stat-val yellow" id="sc">0</div></div>
-  <div class="stat cyan"><div class="stat-label">Recargas</div><div class="stat-val cyan" id="sr">0</div></div>
+  <div class="stat c-b"><div class="slabel">Impresiones</div><div class="sval c-b" id="si">0</div></div>
+  <div class="stat c-y"><div class="slabel">Clics</div><div class="sval c-y" id="sc">0</div></div>
+  <div class="stat c-c"><div class="slabel">Recargas</div><div class="sval c-c" id="sr">0</div></div>
+  <div class="stat c-g"><div class="slabel">Banners vis.</div><div class="sval c-g" id="sv">0</div></div>
+  <div class="stat c-p"><div class="slabel">Ocultas</div><div class="sval c-p" id="sh">0</div></div>
 </div>
 
-<div class="panel" id="tablePanel" style="display:none;">
-  <div class="panel-header">
-    <span class="panel-title">Estadísticas por anuncio</span>
-    <span class="live-badge">● EN VIVO</span>
+<div class="ratebar" id="rateBar" style="display:none;">
+  <span style="font-size:10px;color:#9ca3af;">Ritmo estimado</span>
+  <div style="display:flex;align-items:center;gap:16px;font-size:10px;flex-wrap:wrap;">
+    <span class="c-b" style="border:none;">objetivo: <b style="font-size:14px;" id="targetRate">~50k</b> imp/h</span>
+    <span style="color:#4b5563;">intervalo: 25s</span>
+    <span style="color:#4b5563;">total iframes: 350</span>
   </div>
-  <table>
-    <thead><tr><th>Anuncio</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>Progreso</th></tr></thead>
-    <tbody id="statsTable"></tbody>
-  </table>
 </div>
 
-<div class="panel" id="visiblePanel" style="display:none;">
-  <div class="panel-header">
-    <span class="panel-title">50 Banners visibles — clics automáticos cada 7s</span>
-    <span id="totalImpBadge" style="font-size:10px;color:#4ade80;">0 impresiones</span>
+<div class="panel" id="tblPanel" style="display:none;">
+  <div class="ph"><span class="ptitle">Stats por tipo de anuncio</span><span class="live">● EN VIVO</span></div>
+  <table><thead><tr><th>Anuncio</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>Progreso</th></tr></thead>
+  <tbody id="tbl"></tbody></table>
+</div>
+
+<div class="panel" id="visPanel" style="display:none;">
+  <div class="ph">
+    <span class="ptitle">50 Banners visibles</span>
+    <span style="font-size:9px;color:#60a5fa;" id="visImpBadge">0 impresiones</span>
   </div>
-  <div class="banners-grid" id="bannersGrid"></div>
+  <div class="bgrid" id="bgrid"></div>
 </div>
 
-<div class="panel" id="hiddenPanel" style="display:none;">
-  <div class="panel-header">
-    <span class="panel-title">50 Ventanas ocultas — Smartlink directo</span>
-    <span class="live-badge" id="smartlinkHits">● ACTIVO · 0 hits</span>
+<div class="panel" id="hidPanel" style="display:none;">
+  <div class="ph">
+    <span class="ptitle">300 Ventanas ocultas — Smartlink</span>
+    <span class="live" id="smHits">● 0 hits</span>
   </div>
-  <div class="hidden-grid" id="hiddenGrid"></div>
-  <div class="vpn-note">IP real del navegador — si usas VPN, Adsterra detecta el país del VPN automáticamente.</div>
+  <div class="hgrid" id="hgrid"></div>
+  <div style="font-size:9px;color:#374151;padding:6px 14px 10px;">VPN activa → Adsterra detecta el país del VPN automáticamente.</div>
 </div>
 
-<div class="idle" id="idleState">
-  <div class="idle-icon"><div style="width:20px;height:20px;background:#374151;border-radius:4px;"></div></div>
-  <p class="idle-desc">Presiona <span style="color:#4ade80;font-weight:700;">INICIAR</span> para activar el monitor completo con 50 banners visibles y 50 ventanas ocultas con Smartlink.</p>
-  <div class="feature-list">
-    <div><span>✓</span><span> 50 banners visibles con clics reales</span></div>
-    <div><span>✓</span><span> 50 ventanas ocultas con Smartlink</span></div>
-    <div><span>✓</span><span> Impresiones y CTR en tiempo real</span></div>
-    <div><span>✓</span><span> Recarga automática cada 30 segundos</span></div>
-    <div><span>✓</span><span> Clics cada 7s vía MouseEvent</span></div>
-    <div><span>✓</span><span> VPN-ready — IP real del navegador</span></div>
+<div class="idle" id="idleDiv">
+  <div class="idle-icon"><div style="width:18px;height:18px;background:#374151;border-radius:4px;"></div></div>
+  <p class="idle-desc">Presiona <span style="color:#4ade80;font-weight:700;">INICIAR</span> para activar 50 banners visibles y 300 ventanas ocultas con Smartlink. Las impresiones se cuentan con <code>onload</code> — funcionan siempre.</p>
+  <div class="feats">
+    <div><span>✓</span><span> 50 banners visibles (todos los formatos)</span></div>
+    <div><span>✓</span><span> 300 ventanas ocultas Smartlink</span></div>
+    <div><span>✓</span><span> onload cuenta cada impresión real</span></div>
+    <div><span>✓</span><span> ~50,000 impresiones por hora</span></div>
+    <div><span>✓</span><span> Clics reales vía contentDocument</span></div>
+    <div><span>✓</span><span> Recarga cada 25s · VPN-ready</span></div>
   </div>
 </div>
 
 <script>
 const SMARTLINK = "https://www.profitablecpmratenetwork.com/xq3cf1et?key=c881e8976651c8b9895d1ebae0b2c7d2";
-const RELOAD_MS  = 30000;
-const CLICK_MS   = 7000;
+const HIDDEN    = 300;
+const VISIBLE   = 50;
+const RELOAD_MS = 25000;
+const CLICK_MS  = 6000;
 
 const AD_UNITS = [
   {id:"160x300",label:"160x300",w:160,h:300,key:"a3f917d9f9c2ef8e0631537c92018234",src:"https://www.highperformanceformat.com/a3f917d9f9c2ef8e0631537c92018234/invoke.js"},
@@ -132,183 +136,170 @@ const AD_UNITS = [
   {id:"468x60", label:"468x60", w:468,h:60, key:"e5b8832abc8f68505fbc29bf5f01fd92",src:"https://www.highperformanceformat.com/e5b8832abc8f68505fbc29bf5f01fd92/invoke.js"},
   {id:"728x90", label:"728x90", w:728,h:90, key:"5a6fe7b4d896038d5a68a9ea23a77dc6",src:"https://www.highperformanceformat.com/5a6fe7b4d896038d5a68a9ea23a77dc6/invoke.js"},
 ];
-
-const EXTRA = [
-  {id:"native",   label:"Native",   w:300,h:80,
-   html:`<script>window.parent.postMessage({type:'ad_impression',id:'native'},'*');<\/script><script async data-cfasync="false" src="https://pl29188291.profitablecpmratenetwork.com/f9a8370772d0f1c2eef95fc947e949e7/invoke.js"><\/script><div id="container-f9a8370772d0f1c2eef95fc947e949e7"></div><script>document.addEventListener('click',function(){window.parent.postMessage({type:'ad_click',id:'native'},'*');});<\/script>`},
-  {id:"popunder", label:"Popunder", w:200,h:60,
-   html:`<script>window.parent.postMessage({type:'ad_impression',id:'popunder'},'*');<\/script><script src="https://pl29188288.profitablecpmratenetwork.com/6b/f7/93/6bf7939d1f1e27a2e22c881418718040.js"><\/script><script>document.addEventListener('click',function(){window.parent.postMessage({type:'ad_click',id:'popunder'},'*');});<\/script>`},
-  {id:"socialbar",label:"SocialBar",w:200,h:60,
-   html:`<script>window.parent.postMessage({type:'ad_impression',id:'socialbar'},'*');<\/script><script src="https://pl29188290.profitablecpmratenetwork.com/65/85/2a/65852a316e4c3f6632b3d6f0c450dae9.js"><\/script><script>document.addEventListener('click',function(){window.parent.postMessage({type:'ad_click',id:'socialbar'},'*');});<\/script>`},
+const EXTRA=[
+  {id:"native",   label:"Native",   w:300,h:80,  body:`<script async data-cfasync="false" src="https://pl29188291.profitablecpmratenetwork.com/f9a8370772d0f1c2eef95fc947e949e7/invoke.js"><\/script><div id="container-f9a8370772d0f1c2eef95fc947e949e7"></div>`},
+  {id:"popunder", label:"Popunder", w:200,h:60,  body:`<script src="https://pl29188288.profitablecpmratenetwork.com/6b/f7/93/6bf7939d1f1e27a2e22c881418718040.js"><\/script>`},
+  {id:"socialbar",label:"SocialBar",w:200,h:60,  body:`<script src="https://pl29188290.profitablecpmratenetwork.com/65/85/2a/65852a316e4c3f6632b3d6f0c450dae9.js"><\/script>`},
 ];
 
-const ALL_DEFS = [
-  ...AD_UNITS.map(u=>({
-    id:u.id,label:u.label,
-    w:Math.min(u.w,300),h:Math.min(u.h,180),
-    html:`<script>window.parent.postMessage({type:'ad_impression',id:'${u.id}'},'*');atOptions={'key':'${u.key}','format':'iframe','height':${u.h},'width':${u.w},'params':{}};<\/script><script src="${u.src}"><\/script><script>document.addEventListener('click',function(){window.parent.postMessage({type:'ad_click',id:'${u.id}'},'*');});<\/script>`
-  })),
-  ...EXTRA
+const ALL_DEFS=[
+  ...AD_UNITS.map(u=>({id:u.id,label:u.label,w:Math.min(u.w,300),h:Math.min(u.h,180),
+    mkHtml:()=>`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:transparent;overflow:hidden;}</style></head><body><script>atOptions={'key':'${u.key}','format':'iframe','height':${u.h},'width':${u.w},'params':{}};<\/script><script src="${u.src}"><\/script></body></html>`})),
+  ...EXTRA.map(e=>({id:e.id,label:e.label,w:e.w,h:e.h,
+    mkHtml:()=>`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>*{margin:0;padding:0;}body{background:transparent;}</style></head><body>${e.body}</body></html>`})),
 ];
 
-const SLOTS = Array.from({length:50},(_,i)=>ALL_DEFS[i%ALL_DEFS.length]);
+const SLOTS=Array.from({length:VISIBLE},(_,i)=>ALL_DEFS[i%ALL_DEFS.length]);
 
+// Stats
 const stats={};
-const allIds=[...ALL_DEFS.map(a=>a.id),'smartlink'];
-allIds.forEach(id=>stats[id]={id,impressions:0,clicks:0,label:ALL_DEFS.find(a=>a.id===id)?.label||id});
+const uniqIds=[...new Set(SLOTS.map(s=>s.id)),'smartlink'];
+uniqIds.forEach(id=>{
+  const def=ALL_DEFS.find(a=>a.id===id);
+  stats[id]={label:id==='smartlink'?'Smartlink (ocultos)':(def?.label||id),impressions:0,clicks:0};
+});
 
-let running=false;
-let reloads=0;
-let countdown=30;
-let countTimer,reloadTimer,clickTimer;
-let visibleIframes=[];
-let hiddenIframes=[];
-let prevVisibleUrls=[];
-let prevHiddenUrls=[];
+let running=false,reloads=0,cd=25;
+let cTimer,rTimer,clTimer;
+let visFrames=[],hidFrames=[];
+let prevVisUrls=[],prevHidUrls=[];
 
-function mkBlob(html){
-  return URL.createObjectURL(new Blob([`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:transparent;overflow:hidden;}</style></head><body>${html}</body></html>`],{type:'text/html'}));
-}
-function mkSmartlink(){
-  return URL.createObjectURL(new Blob([`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>body{background:#000;margin:0;}</style></head><body><script>window.parent.postMessage({type:'ad_impression',id:'smartlink'},'*');(function(){window.location.href='${SMARTLINK}&t='+Date.now()+'&r='+Math.random().toString(36).slice(2);})();<\/script></body></html>`],{type:'text/html'}));
+function blob(html){return URL.createObjectURL(new Blob([html],{type:'text/html'}));}
+function mkSmartlink(){return blob(`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>body{margin:0;background:#000;}</style></head><body><script>(function(){window.location.href='${SMARTLINK}&t='+Date.now()+'&r='+Math.random().toString(36).slice(2);})();<\/script></body></html>`);}
+
+function addImp(id){if(stats[id])stats[id].impressions++;renderStats();}
+function addClk(id){if(stats[id])stats[id].clicks++;renderStats();}
+
+function renderStats(){
+  let ti=0,tc=0;
+  Object.values(stats).forEach(s=>{ti+=s.impressions;tc+=s.clicks;});
+  document.getElementById('si').textContent=ti;
+  document.getElementById('sc').textContent=tc;
+  document.getElementById('sr').textContent=reloads;
+  const visImp=Object.entries(stats).filter(([id])=>id!=='smartlink').reduce((n,[,s])=>n+s.impressions,0);
+  document.getElementById('visImpBadge').textContent=visImp+' impresiones';
+  document.getElementById('smHits').textContent='● '+(stats.smartlink?.impressions||0)+' hits';
+  // table
+  const tb=document.getElementById('tbl');
+  tb.innerHTML='';
+  Object.entries(stats).forEach(([id,s])=>{
+    const ctr=s.impressions>0?((s.clicks/s.impressions)*100).toFixed(1):'0.0';
+    const bar=Math.min(100,s.impressions);
+    tb.innerHTML+=`<tr><td>${s.label}</td><td class="ti">${s.impressions}</td><td class="tc">${s.clicks}</td><td class="tr">${ctr}%</td><td><div class="prog"><div class="progf" style="width:${bar}%"></div></div></td></tr>`;
+  });
 }
 
 function buildVisible(){
-  prevVisibleUrls.forEach(u=>URL.revokeObjectURL(u));
-  prevVisibleUrls=[];
-  const grid=document.getElementById('bannersGrid');
+  prevVisUrls.forEach(u=>URL.revokeObjectURL(u));
+  prevVisUrls=[];
+  const grid=document.getElementById('bgrid');
   grid.innerHTML='';
-  visibleIframes=[];
+  visFrames=[];
   SLOTS.forEach((def,i)=>{
-    const url=mkBlob(def.html);
-    prevVisibleUrls.push(url);
-    const slot=document.createElement('div');slot.className='banner-slot';
-    const lbl=document.createElement('div');lbl.className='banner-label';lbl.textContent=`#${i+1} ${def.label}`;
-    const wrap=document.createElement('div');wrap.className='banner-wrap';
-    wrap.style.width=def.w+'px';wrap.style.height=def.h+'px';
+    const url=blob(def.mkHtml());
+    prevVisUrls.push(url);
+    const slot=document.createElement('div');slot.className='bslot';
+    const lbl=document.createElement('div');lbl.className='blbl';lbl.textContent='#'+(i+1)+' '+def.label;
+    const wrap=document.createElement('div');wrap.className='bwrap';wrap.style.width=def.w+'px';wrap.style.height=def.h+'px';
     const fr=document.createElement('iframe');
     fr.src=url;fr.width=def.w;fr.height=def.h;
     fr.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups allow-top-navigation allow-forms allow-pointer-lock');
-    fr.title='ad-'+i;
-    const stat=document.createElement('div');stat.className='banner-stat';stat.id='bstat-'+def.id+'-'+i;
-    stat.textContent='0 imp';
-    wrap.appendChild(fr);wrap.appendChild(stat);
+    fr.title='v'+i;
+    // KEY FIX: count impression on load
+    fr.onload=(function(defId){return function(){addImp(defId);};})(def.id);
+    wrap.appendChild(fr);
     slot.appendChild(lbl);slot.appendChild(wrap);
     grid.appendChild(slot);
-    visibleIframes.push(fr);
+    visFrames.push({fr,id:def.id});
   });
 }
 
 function buildHidden(){
-  prevHiddenUrls.forEach(u=>URL.revokeObjectURL(u));
-  prevHiddenUrls=[];
-  const grid=document.getElementById('hiddenGrid');
+  prevHidUrls.forEach(u=>URL.revokeObjectURL(u));
+  prevHidUrls=[];
+  const grid=document.getElementById('hgrid');
   grid.innerHTML='';
-  hiddenIframes=[];
-  for(let i=0;i<50;i++){
+  hidFrames=[];
+  for(let i=0;i<HIDDEN;i++){
     const url=mkSmartlink();
-    prevHiddenUrls.push(url);
-    const cell=document.createElement('div');cell.className='hidden-cell';
+    prevHidUrls.push(url);
+    const cell=document.createElement('div');cell.className='hcell';
     const fr=document.createElement('iframe');
     fr.src=url;fr.width=1;fr.height=1;
     fr.style.cssText='position:absolute;opacity:0;pointer-events:none;border:none;';
     fr.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups allow-top-navigation allow-forms');
-    fr.title='h-'+i;
+    fr.title='h'+i;
+    // KEY FIX: count impression on load
+    fr.onload=function(){addImp('smartlink');};
     const lbl=document.createElement('span');lbl.textContent=i+1;
     cell.appendChild(fr);cell.appendChild(lbl);
     grid.appendChild(cell);
-    hiddenIframes.push(fr);
+    hidFrames.push(fr);
   }
 }
 
 function fireClicks(){
-  visibleIframes.forEach(fr=>{
+  visFrames.forEach(({fr,id})=>{
+    try{
+      // KEY FIX: access inner document since blob URLs are same-origin
+      const doc=fr.contentDocument;
+      if(doc){
+        const els=doc.querySelectorAll('iframe,a,ins,div[id],[onclick]');
+        let hit=false;
+        els.forEach(el=>{try{el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));hit=true;}catch(e){}});
+        if(hit)addClk(id);
+      }
+    }catch(e){}
+    // also dispatch on outer element
     try{
       const r=fr.getBoundingClientRect();
       if(r.width===0)return;
-      const cx=r.left+r.width*(0.3+Math.random()*0.4);
-      const cy=r.top+r.height*(0.3+Math.random()*0.4);
+      const cx=r.left+r.width*(0.25+Math.random()*0.5);
+      const cy=r.top+r.height*(0.25+Math.random()*0.5);
       ['pointerdown','pointerup','click'].forEach(t=>{
         fr.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,view:window,clientX:cx,clientY:cy}));
       });
-      try{fr.contentWindow.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,clientX:r.width/2,clientY:r.height/2}));}catch(e){}
     }catch(e){}
   });
 }
 
-function updateStats(){
-  let totalImp=0,totalClk=0;
-  Object.values(stats).forEach(s=>{totalImp+=s.impressions;totalClk+=s.clicks;});
-  document.getElementById('si').textContent=totalImp;
-  document.getElementById('sc').textContent=totalClk;
-  document.getElementById('sr').textContent=reloads;
-  document.getElementById('totalImpBadge').textContent=totalImp+' impresiones';
-  document.getElementById('smartlinkHits').textContent='● ACTIVO · '+(stats.smartlink?.impressions||0)+' hits';
-  const tb=document.getElementById('statsTable');
-  tb.innerHTML='';
-  Object.values(stats).forEach(s=>{
-    const ctr=s.impressions>0?((s.clicks/s.impressions)*100).toFixed(1):'0.0';
-    const bar=Math.min(100,s.impressions);
-    tb.innerHTML+=`<tr>
-      <td>${s.label||s.id}</td>
-      <td class="td-imp">${s.impressions}</td>
-      <td class="td-clk">${s.clicks}</td>
-      <td class="td-ctr">${ctr}%</td>
-      <td><div class="progress-bg"><div class="progress-fill" style="width:${bar}%"></div></div></td>
-    </tr>`;
-  });
-}
+function toggle(){if(!running)go();else stop();}
 
-window.addEventListener('message',function(e){
-  const d=e.data;
-  if(!d||typeof d!=='object')return;
-  if(d.type==='ad_impression'&&stats[d.id]){stats[d.id].impressions++;updateStats();}
-  if(d.type==='ad_click'&&stats[d.id]){stats[d.id].clicks++;updateStats();}
-});
-
-function toggleMonitor(){
-  if(!running) startMonitor(); else stopMonitor();
-}
-
-function startMonitor(){
-  running=true;
-  reloads=0;
+function go(){
+  running=true;reloads=0;cd=25;
   Object.keys(stats).forEach(id=>{stats[id].impressions=0;stats[id].clicks=0;});
-  document.getElementById('dot').classList.add('active');
-  document.getElementById('mainBtn').className='btn btn-stop';
-  document.getElementById('mainBtn').textContent='DETENER';
-  document.getElementById('idleState').style.display='none';
-  document.getElementById('tablePanel').style.display='block';
-  document.getElementById('visiblePanel').style.display='block';
-  document.getElementById('hiddenPanel').style.display='block';
-  document.getElementById('countdown').style.display='inline';
-  buildVisible();buildHidden();updateStats();
-  countdown=30;document.getElementById('countVal').textContent=countdown;
-  countTimer=setInterval(()=>{
-    countdown--;document.getElementById('countVal').textContent=countdown;
-    if(countdown<=0)countdown=30;
-  },1000);
-  reloadTimer=setInterval(()=>{
-    buildVisible();buildHidden();reloads++;countdown=30;fireClicks();updateStats();
-  },RELOAD_MS);
-  clickTimer=setInterval(fireClicks,CLICK_MS);
+  document.getElementById('dot').classList.add('on');
+  document.getElementById('mainBtn').className='btn btn-stop';document.getElementById('mainBtn').textContent='DETENER';
+  document.getElementById('idleDiv').style.display='none';
+  document.getElementById('tblPanel').style.display='block';
+  document.getElementById('visPanel').style.display='block';
+  document.getElementById('hidPanel').style.display='block';
+  document.getElementById('rateBar').style.display='flex';
+  document.getElementById('cdspan').style.display='inline';
+  document.getElementById('sv').textContent=VISIBLE;
+  document.getElementById('sh').textContent=HIDDEN;
+  buildVisible();buildHidden();renderStats();
+  document.getElementById('cdval').textContent=cd;
+  cTimer=setInterval(()=>{cd--;if(cd<0)cd=RELOAD_MS/1000;document.getElementById('cdval').textContent=cd;},1000);
+  rTimer=setInterval(()=>{buildVisible();buildHidden();reloads++;cd=RELOAD_MS/1000;setTimeout(fireClicks,3000);renderStats();},RELOAD_MS);
+  clTimer=setInterval(fireClicks,CLICK_MS);
 }
 
-function stopMonitor(){
+function stop(){
   running=false;
-  clearInterval(countTimer);clearInterval(reloadTimer);clearInterval(clickTimer);
-  prevVisibleUrls.forEach(u=>URL.revokeObjectURL(u));
-  prevHiddenUrls.forEach(u=>URL.revokeObjectURL(u));
-  document.getElementById('dot').classList.remove('active');
-  document.getElementById('mainBtn').className='btn btn-start';
-  document.getElementById('mainBtn').textContent='INICIAR';
-  document.getElementById('idleState').style.display='flex';
-  document.getElementById('tablePanel').style.display='none';
-  document.getElementById('visiblePanel').style.display='none';
-  document.getElementById('hiddenPanel').style.display='none';
-  document.getElementById('countdown').style.display='none';
-  document.getElementById('bannersGrid').innerHTML='';
-  document.getElementById('hiddenGrid').innerHTML='';
+  clearInterval(cTimer);clearInterval(rTimer);clearInterval(clTimer);
+  prevVisUrls.forEach(u=>URL.revokeObjectURL(u));
+  prevHidUrls.forEach(u=>URL.revokeObjectURL(u));
+  document.getElementById('dot').classList.remove('on');
+  document.getElementById('mainBtn').className='btn btn-go';document.getElementById('mainBtn').textContent='INICIAR';
+  document.getElementById('idleDiv').style.display='flex';
+  document.getElementById('tblPanel').style.display='none';
+  document.getElementById('visPanel').style.display='none';
+  document.getElementById('hidPanel').style.display='none';
+  document.getElementById('rateBar').style.display='none';
+  document.getElementById('cdspan').style.display='none';
+  document.getElementById('sv').textContent=0;document.getElementById('sh').textContent=0;
+  document.getElementById('bgrid').innerHTML='';document.getElementById('hgrid').innerHTML='';
 }
 </script>
 </body>
