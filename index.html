@@ -271,7 +271,7 @@ function buildVisible(){
     var wrap=document.createElement('div');wrap.className='bwrap';wrap.style.width=def.w+'px';wrap.style.height=def.h+'px';
     var fr=document.createElement('iframe');
     fr.src=url;fr.width=def.w;fr.height=def.h;
-    fr.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups allow-top-navigation allow-forms allow-pointer-lock');
+
     fr.title='v'+i;
     fr.onload=(function(defId){return function(){addImp(defId);};})(def.id);
     wrap.appendChild(fr);slot.appendChild(lbl);slot.appendChild(wrap);grid.appendChild(slot);
