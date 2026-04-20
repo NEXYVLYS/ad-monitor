@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      html,body{margin:0;width:100%;height:100%;background:#111827;overflow:hidden;color:#94a3b8;font:12px monospace}
+      #status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;pointer-events:none}
+      #native-container{width:100%;min-height:100%}
+    </style>
+  </head>
+  <body>
+    <div id="status">cargando anuncio</div>
+    <div id="native-container"></div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const slot = Number(params.get("slot") || "0");
+      const kind = params.get("kind") || "banner";
+      const key = params.get("key") || "";
+      const src = params.get("src") || "";
+      const width = Number(params.get("w") || "300");
+      const height = Number(params.get("h") || "250");
+      const container = params.get("container") || "";
+      const statusEl = document.getElementById("status");
+      const nativeContainer = document.getElementById("native-container");
+
+      function send(status, detail) {
+        parent.postMessage({ type: "ad-slot", slot, status, detail }, "*");
+      }
+
+      function hasVisibleAdNode() {
+        const selectors = [
+          "iframe[src]",
+          "img[src]",
+          "a[href]",
+          "ins iframe",
+          "[id^='container-'] iframe",
+          "[id^='container-'] img",
+          "[id^='container-'] a"
+        ];
+        return selectors.some((selector) => document.querySelector(selector));
+      }
+
+      function inspectLoaded() {
+        if (hasVisibleAdNode()) {
+          statusEl.style.display = "none";
+          send("filled", "creative inserted");
+          return;
+        }
+        send("loaded", "script loaded, waiting for fill");
+      }
+
+      window.onerror = function () {
+        send("blocked", "script error or blocked");
+      };
+
+      if (!src) {
+        send("blocked", "missing script url");
+      } else if (kind === "native") {
+        statusEl.textContent = "cargando native";
+        nativeContainer.id = container || "container-f9a8370772d0f1c2eef95fc947e949e7";
+        window.__nativeLoaded = function () {
+          setTimeout(inspectLoaded, 1200);
+          setTimeout(inspectLoaded, 3500);
+          setTimeout(inspectLoaded, 7000);
+        };
+        window.__nativeBlocked = function () {
+          send("blocked", "network/adblock blocked native script");
+        };
+        document.write('<script async data-cfasync="false" src="' + src.replace(/"/g, "%22") + '" onload="window.__nativeLoaded()" onerror="window.__nativeBlocked()"><\\/script>');
+      } else {
+        statusEl.textContent = "cargando " + width + "x" + height;
+        var atOptions = {
+          key,
+          format: "iframe",
+          height,
+          width,
+          params: {}
+        };
+        window.atOptions = atOptions;
+        window.__bannerLoaded = function () {
+          setTimeout(inspectLoaded, 900);
+          setTimeout(inspectLoaded, 2500);
+          setTimeout(inspectLoaded, 6000);
+        };
+        window.__bannerBlocked = function () {
+          send("blocked", "network/adblock blocked banner script");
+        };
+        document.write('<script src="' + src.replace(/"/g, "%22") + '" onload="window.__bannerLoaded()" onerror="window.__bannerBlocked()"><\\/script>');
+      }
+    </script>
+  </body>
+</html>
